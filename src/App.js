@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Todolist from './Todo/TodoList'
+import Context from './context'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [todos, setTodos] = React.useState([
+    {id: 1, completed: false, title: 'Купить хлеб'},
+    {id: 2, completed: true, title: 'Купить масло'},
+    {id: 3, completed: false, title: 'Купить молоко'}
+  ])
 
-export default App;
+  function removeTodo(id) {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+  
+
+  function toggleTodo (id) {
+    setTodos(
+      todos.map(todo => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed
+      }
+      return todo
+    })
+    )
+  }
+
+
+  return (
+    <Context.Provider value= {{removeTodo}}>
+    <div className="wrapper">
+      <h1> React tutorial</h1>
+
+      <Todolist todos={todos} onToggle={toggleTodo} />
+    </div>
+    </Context.Provider>
+  )
+  }
+
+export default App
