@@ -38,7 +38,9 @@ const styles = {
                 {todo.title} 
             </span>
 
-            <button className="rm" onclick={() => removeTodo(todo.id)}>&times;</button>
+            <button className="rm" onClick={ removeTodo.bind(null, todo.id)}>
+                &times;
+                </button>
             
             
         </li>
